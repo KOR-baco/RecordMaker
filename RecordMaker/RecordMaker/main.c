@@ -15,8 +15,9 @@ typedef struct{		// 사원 정보 구조체.
 	int id;
 	int score;
 }NTinfo;
+
 int staff[MAXMEMBER]={0,}; // 사원 1~99999
-int cache[MAXMEMBER]={0,}; // 중복 체크용.
+int visit[MAXMEMBER]={0,}; // 중복 체크용.
 int index = MAXMEMBER - 1; // 남은 사원정보 수.
 
 void PrintStaffId(int id, int score); // 사원id 출력
@@ -53,14 +54,14 @@ int main(int argc, char *argv[])
 		myRandom = (rand()%1001)*100 + (rand()%100); // 0 ~ 100000 난수 생성
 		nt[i].id = myRandom%index + 1;				 // 남은 index만큼의 난수로 변경
 		
-		// 방문한 index는 cache를 통해 체크하고, 방문하지 않은 사원의 id 출력.
+		// 방문한 index는 visit를 통해 체크하고, 방문하지 않은 사원의 id 출력.
 		// '에라토스테네스의 체'와 유사한 알고리즘.
 		for(j=1,k=0; j<MAXMEMBER; j++){
-			if(cache[j]==0){
+			if(visit[j]==0){
 				k++;
 			}
 			if(k==nt[i].id){
-				cache[j]=1;
+				visit[j]=1;
 				nt[i].id = staff[j];
 				index--;
 				break;
